@@ -1,23 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Canvas } from "./lib/core/canvas";
+import { useCanvasStore } from "./lib/core/state";
 
 function App() {
+  const tool = useCanvasStore((s) => s.activeTool);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        {/* <p>
           Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        </p> */}
+        <Canvas width={window.innerWidth} height={window.innerHeight} />
+        <div
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          Learn React
-        </a>
+          <button
+            onClick={() => useCanvasStore.setState({ activeTool: "draw" })}
+            disabled={tool === "draw"}
+          >
+            draw
+          </button>
+          <button
+            onClick={() => useCanvasStore.setState({ activeTool: "select" })}
+            disabled={tool === "select"}
+          >
+            select
+          </button>
+          <button
+            onClick={() => useCanvasStore.setState({ activeTool: "move" })}
+            disabled={tool === "move"}
+          >
+            move
+          </button>
+          <button
+            onClick={() => useCanvasStore.setState({ activeTool: "shape" })}
+            disabled={tool === "shape"}
+          >
+            shape
+          </button>
+        </div>
       </header>
     </div>
   );
